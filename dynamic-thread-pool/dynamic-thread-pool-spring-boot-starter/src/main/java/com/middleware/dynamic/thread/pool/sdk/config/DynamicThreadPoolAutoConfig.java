@@ -7,4 +7,7 @@ package com.middleware.dynamic.thread.pool.sdk.config;
  */
 
 public class DynamicThreadPoolAutoConfig {
+    public void dynamicThreadPoolService() {
+
+    }
 }
