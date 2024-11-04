@@ -47,7 +47,7 @@
             <artifactId>commons-codec</artifactId>
         </dependency>
 
-        <!-- 线程组件 -->
+        <!-- Thread Component -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>dynamic-thread-pool-spring-boot-starter</artifactId>
