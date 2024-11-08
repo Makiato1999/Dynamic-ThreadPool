@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -27,6 +30,15 @@ public class DynamicThreadPoolAutoConfig {
         if (StringUtils.isBlank(applicationName)) {
             applicationName = "NameIsNotFound";
             logger.warn("Dynamic thread pool startup prompt: SpringBoot application is not configured with spring.application.name, unable to obtain the application name!");
+        }
+
+        Set<String> threadPoolKeys = threadPoolExecutorMap.keySet();
+        for (String threadPoolKey : threadPoolKeys) {
+            ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorMap.get(threadPoolKey);
+            int poolSize = threadPoolExecutor.getPoolSize();
+            int corePoolSize = threadPoolExecutor.getCorePoolSize();
+            BlockingQueue<Runnable> queue = threadPoolExecutor.getQueue();
+            String simpleName = queue.getClass().getSimpleName();
         }
 
         logger.info("Thread info: {}", JSON.toJSONString(threadPoolExecutorMap.keySet()));
