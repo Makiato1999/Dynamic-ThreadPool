@@ -101,7 +101,7 @@ public class ThreadPoolConfigEntity {
     public void setQueueSize(int queueSize) {
         this.queueSize = queueSize;
     }
-    
+
     public int getRemainingCapacity() {
         return remainingCapacity;
     }
