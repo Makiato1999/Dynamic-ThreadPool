@@ -24,12 +24,12 @@ public class ThreadPoolConfigEntity {
     /**
      * Current count of active threads
      */
-    private int currActiveCount;
+    private int activeCount;
 
     /**
      * Current number of threads in the pool
      */
-    private int currPoolSize;
+    private int poolSize;
 
     /**
      * Queue type
@@ -74,24 +74,24 @@ public class ThreadPoolConfigEntity {
         return maxPoolSize;
     }
 
-    public void setMaxPoolSize() {
+    public void setMaxPoolSize(int maxPoolSize) {
         this.maxPoolSize = maxPoolSize;
     }
 
-    public int getCurrActiveCount() {
-        return currActiveCount;
+    public int getActiveCount() {
+        return activeCount;
     }
 
-    public void setCurrActiveCount(int currActiveCount) {
-        this.currActiveCount = currActiveCount;
+    public void setActiveCount(int activeCount) {
+        this.activeCount = activeCount;
     }
 
-    public int getCurrPoolSize() {
-        return currPoolSize;
+    public int getPoolSize() {
+        return poolSize;
     }
 
-    public void setCurrPoolSize(int currPoolSize) {
-        this.currPoolSize = currPoolSize;
+    public void setPoolSize(int poolSize) {
+        this.poolSize = poolSize;
     }
 
     public int getQueueSize() {
@@ -100,6 +100,14 @@ public class ThreadPoolConfigEntity {
 
     public void setQueueSize(int queueSize) {
         this.queueSize = queueSize;
+    }
+
+    public String getQueueType() {
+        return queueType;
+    }
+
+    public void setQueueType(String queueType) {
+        this.queueType = queueType;
     }
 
     public int getRemainingCapacity() {

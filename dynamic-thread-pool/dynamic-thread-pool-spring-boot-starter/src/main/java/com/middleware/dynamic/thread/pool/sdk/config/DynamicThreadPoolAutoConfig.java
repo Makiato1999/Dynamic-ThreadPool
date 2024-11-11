@@ -32,17 +32,6 @@ public class DynamicThreadPoolAutoConfig {
             logger.warn("Dynamic thread pool startup prompt: SpringBoot application is not configured with spring.application.name, unable to obtain the application name!");
         }
 
-        Set<String> threadPoolKeys = threadPoolExecutorMap.keySet();
-        for (String threadPoolKey : threadPoolKeys) {
-            ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorMap.get(threadPoolKey);
-            int poolSize = threadPoolExecutor.getPoolSize();
-            int corePoolSize = threadPoolExecutor.getCorePoolSize();
-            BlockingQueue<Runnable> queue = threadPoolExecutor.getQueue();
-            String simpleName = queue.getClass().getSimpleName();
-        }
-
-        logger.info("Thread info: {}", JSON.toJSONString(threadPoolExecutorMap.keySet()));
-
         return new DynamicThreadPoolServiceImp(applicationName, threadPoolExecutorMap);
     }
 }
