@@ -1,4 +1,4 @@
-# Dynamic-ThreadPool
+# Spring Starter - Dynamic Thread Pool
 
 ## Project Overview
 The Dynamic Thread Pool Component Project is a practical solution for managing and optimizing thread pools in medium to large-scale applications. This project addresses the need for a flexible, centralized thread pool management tool that can dynamically adjust configurations, monitor performance, and streamline resource utilization. It’s a vital component for applications where managing thread efficiency is crucial, especially for IO-bound and CPU-bound workloads.
