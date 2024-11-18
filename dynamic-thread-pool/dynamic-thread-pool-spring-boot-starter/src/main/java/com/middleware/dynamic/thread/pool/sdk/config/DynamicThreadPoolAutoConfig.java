@@ -1,8 +1,10 @@
 package com.middleware.dynamic.thread.pool.sdk.config;
 
 import com.middleware.dynamic.thread.pool.sdk.domain.DynamicThreadPoolServiceImp;
+import com.middleware.dynamic.thread.pool.sdk.domain.IDynamicThreadPoolService;
 import com.middleware.dynamic.thread.pool.sdk.registry.IRegistry;
-import com.middleware.dynamic.thread.pool.sdk.registry.redis.RedisRegistry;
+import com.middleware.dynamic.thread.pool.sdk.registry.redis.RedisRegistryImp;
+import com.middleware.dynamic.thread.pool.sdk.trigger.job.ThreadPoolDataReportJob;
 import org.apache.commons.lang.StringUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -14,17 +16,19 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @description dynamic config entrance
+ * @description 动态 线程池的配置 入口
  * @author Xiaoran
  * @create 2024-10-29 21:57
  */
 
 @Configuration
+@EnableScheduling
 @EnableConfigurationProperties(DynamicThreadPoolAutoProperties.class)
 public class DynamicThreadPoolAutoConfig {
     private final Logger logger = LoggerFactory.getLogger(DynamicThreadPoolAutoConfig.class);
@@ -56,7 +60,7 @@ public class DynamicThreadPoolAutoConfig {
 
     @Bean
     public IRegistry redisRegistry(RedissonClient dynamicThreadRedissonClient) {
-        return new RedisRegistry(dynamicThreadRedissonClient);
+        return new RedisRegistryImp(dynamicThreadRedissonClient);
     }
 
 
@@ -70,5 +74,10 @@ public class DynamicThreadPoolAutoConfig {
         }
 
         return new DynamicThreadPoolServiceImp(applicationName, threadPoolExecutorMap);
+    }
+
+    @Bean
+    public ThreadPoolDataReportJob threadPoolDataReportJobService(IDynamicThreadPoolService dynamicThreadPoolService, IRegistry registry) {
+        return new ThreadPoolDataReportJob(dynamicThreadPoolService, registry);
     }
 }

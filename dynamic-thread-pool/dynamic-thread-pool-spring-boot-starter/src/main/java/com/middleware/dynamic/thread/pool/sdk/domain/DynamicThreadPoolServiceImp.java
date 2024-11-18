@@ -64,7 +64,7 @@ public class DynamicThreadPoolServiceImp implements IDynamicThreadPoolService {
             logger.info("Dynamic Thread Pool - Configuration Query | Application Name: {} | Thread Name: {} | Pool Configuration: {}.", applicationName, threadPoolName, JSON.toJSONString(threadPoolConfigVO));
         }
 
-        return null;
+        return threadPoolConfigVO;
     }
 
     @Override
