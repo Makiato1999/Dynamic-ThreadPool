@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * @description Redis 注册中心，支持线程池配置的批量上报，支持存储单个配置参数，支持过期设置
+ * @description Redis 注册中心，支持线程池配置的批量上报，支持存储单个配置参数上报
  * @author Xiaoran
  * @create 2024-11-11 12:07
  */
