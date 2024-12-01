@@ -34,13 +34,13 @@ public class ThreadPoolDataReportJob {
         List<ThreadPoolConfigEntity> threadPoolConfigEntityList = dynamicThreadPoolService.queryThreadPoolList();
         // 将获取到的列表上报到注册中心
         registry.reportThreadPool(threadPoolConfigEntityList);
-        logger.info("Dynamic thread pool, report thread pool information: {}", JSON.toJSONString(threadPoolConfigEntityList));
+        logger.info("动态线程池，上报线程池信息：{}", JSON.toJSONString(threadPoolConfigEntityList));
 
         // 遍历每个线程池的配置信息
         for (ThreadPoolConfigEntity threadPoolConfigEntity : threadPoolConfigEntityList) {
             // 上报每个线程池的详细配置参数
             registry.reportThreadPoolConfigParameter(threadPoolConfigEntity);
-            logger.info("Dynamic thread pool, report thread pool configuration: {}", JSON.toJSONString(threadPoolConfigEntity));
+            logger.info("动态线程池，上报线程池配置：{}", JSON.toJSONString(threadPoolConfigEntity));
         }
     }
 }

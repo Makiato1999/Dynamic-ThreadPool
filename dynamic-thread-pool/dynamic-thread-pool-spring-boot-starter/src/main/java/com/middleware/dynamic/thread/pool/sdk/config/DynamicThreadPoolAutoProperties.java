@@ -52,18 +52,21 @@ public class DynamicThreadPoolAutoProperties {
     /**
      * Set the number of connection retries.
      * The default value is 3
+     * 设置连接重试次数，默认为3
      */
     private int retryAttempts = 3;
 
     /**
      * Set the interval time for connection retries (unit: milliseconds).
      * The default value is 1000
+     * 设置连接重试的间隔时间（单位：毫秒），默认为1000
      */
     private int retryInterval = 1000;
 
     /**
      * Set the time interval for periodic checks on whether the connection is available (unit: milliseconds).
      * The default value is 0, indicating that no periodic checks are performed
+     * 设置定期检查连接是否可用的时间间隔（单位：毫秒），默认为0，表示不进行定期检查
      */
     private int pingInterval = 0;
 

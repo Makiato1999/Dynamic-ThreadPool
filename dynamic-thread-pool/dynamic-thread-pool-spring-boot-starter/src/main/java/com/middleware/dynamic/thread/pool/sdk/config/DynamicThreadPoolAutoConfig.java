@@ -5,8 +5,10 @@ import com.middleware.dynamic.thread.pool.sdk.domain.IDynamicThreadPoolService;
 import com.middleware.dynamic.thread.pool.sdk.registry.IRegistry;
 import com.middleware.dynamic.thread.pool.sdk.registry.redis.RedisRegistryImp;
 import com.middleware.dynamic.thread.pool.sdk.trigger.job.ThreadPoolDataReportJob;
+import com.middleware.dynamic.thread.pool.sdk.trigger.listener.ThreadPoolConfigAdjustListener;
 import org.apache.commons.lang.StringUtils;
 import org.redisson.Redisson;
+import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
@@ -53,7 +55,7 @@ public class DynamicThreadPoolAutoConfig {
 
         RedissonClient redissonClient = Redisson.create(config);
 
-        logger.info("Dynamic thread pool, registry (Redis) connection initialized successfully. Host: {} Pool Size: {} Client Active: {}", properties.getHost(), properties.getPoolSize(), !redissonClient.isShutdown());
+        logger.info("动态线程池，注册器（redis）链接初始化完成。{} {} {}", properties.getHost(), properties.getPoolSize(), !redissonClient.isShutdown());
 
         return redissonClient;
     }
@@ -70,7 +72,7 @@ public class DynamicThreadPoolAutoConfig {
 
         if (StringUtils.isBlank(applicationName)) {
             applicationName = "NameIsNotFound";
-            logger.warn("Dynamic thread pool startup prompt: SpringBoot application is not configured with spring.application.name, unable to obtain the application name!");
+            logger.warn("动态线程池，启动提示。SpringBoot 应用未配置 spring.application.name 无法获取到应用名称！");
         }
 
         return new DynamicThreadPoolServiceImp(applicationName, threadPoolExecutorMap);
@@ -80,4 +82,6 @@ public class DynamicThreadPoolAutoConfig {
     public ThreadPoolDataReportJob threadPoolDataReportJobService(IDynamicThreadPoolService dynamicThreadPoolService, IRegistry registry) {
         return new ThreadPoolDataReportJob(dynamicThreadPoolService, registry);
     }
+
+    public RTopic threadPoolConfigAdjustListener(RedissonClient redissonClient, ThreadPoolConfigAdjustListener)
 }

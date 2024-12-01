@@ -15,7 +15,7 @@ import java.util.concurrent.*;
 public class ThreadPoolConfig {
     @Bean("threadPoolExecutor01")
     public ThreadPoolExecutor threadPoolExecutor01(ThreadPoolConfigProperties properties) {
-        // Instantiate strategy
+        // 实例化策略
         RejectedExecutionHandler handler;
         switch (properties.getPolicy()) {
             case "AbortPolicy":
@@ -35,7 +35,7 @@ public class ThreadPoolConfig {
                 break;
         }
 
-        // Create threadpool
+        // 创建线程池
         return new ThreadPoolExecutor(properties.getCorePoolSize(),
                 properties.getMaxPoolSize(),
                 properties.getKeepAliveTime(),
@@ -47,7 +47,7 @@ public class ThreadPoolConfig {
 
     @Bean("threadPoolExecutor02")
     public ThreadPoolExecutor threadPoolExecutor02(ThreadPoolConfigProperties properties) {
-        // Instantiate strategy
+        // 实例化策略
         RejectedExecutionHandler handler;
         switch (properties.getPolicy()) {
             case "AbortPolicy":
@@ -67,7 +67,7 @@ public class ThreadPoolConfig {
                 break;
         }
 
-        // Create threadpool
+        // 创建线程池
         return new ThreadPoolExecutor(properties.getCorePoolSize(),
                 properties.getMaxPoolSize(),
                 properties.getKeepAliveTime(),

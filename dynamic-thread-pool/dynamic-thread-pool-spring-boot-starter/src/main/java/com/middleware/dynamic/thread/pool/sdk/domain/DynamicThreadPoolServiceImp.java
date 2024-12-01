@@ -28,7 +28,7 @@ public class DynamicThreadPoolServiceImp implements IDynamicThreadPoolService {
     @Override
     public List<ThreadPoolConfigEntity> queryThreadPoolList() {
         Set<String> threadPoolBeanNames = threadPoolExecutorMap.keySet();
-        List<ThreadPoolConfigEntity> threadPoolVOS = new ArrayList<>(threadPoolBeanNames.size());
+        List<ThreadPoolConfigEntity> threadPoolVOList = new ArrayList<>(threadPoolBeanNames.size());
         for (String beanName : threadPoolBeanNames) {
             ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorMap.get(beanName);
             ThreadPoolConfigEntity threadPoolConfigVO = new ThreadPoolConfigEntity(applicationName, beanName);
@@ -39,9 +39,9 @@ public class DynamicThreadPoolServiceImp implements IDynamicThreadPoolService {
             threadPoolConfigVO.setQueueType(threadPoolExecutor.getQueue().getClass().getSimpleName());
             threadPoolConfigVO.setQueueSize(threadPoolExecutor.getQueue().size());
             threadPoolConfigVO.setRemainingCapacity(threadPoolExecutor.getQueue().remainingCapacity());
-            threadPoolVOS.add(threadPoolConfigVO);
+            threadPoolVOList.add(threadPoolConfigVO);
         }
-        return threadPoolVOS;
+        return threadPoolVOList;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class DynamicThreadPoolServiceImp implements IDynamicThreadPoolService {
         threadPoolConfigVO.setRemainingCapacity(threadPoolExecutor.getQueue().remainingCapacity());
 
         if (logger.isDebugEnabled()) {
-            logger.info("Dynamic Thread Pool - Configuration Query | Application Name: {} | Thread Name: {} | Pool Configuration: {}.", applicationName, threadPoolName, JSON.toJSONString(threadPoolConfigVO));
+            logger.info("动态线程池，配置查询 应用名:{} 线程名:{} 池化配置:{}", applicationName, threadPoolName, JSON.toJSONString(threadPoolConfigVO));
         }
 
         return threadPoolConfigVO;
