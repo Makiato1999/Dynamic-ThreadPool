@@ -12,15 +12,15 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import org.slf4j.Logger;
 
-public class DynamicThreadPoolServiceImp implements IDynamicThreadPoolService {
+public class DynamicThreadPoolServiceImpl implements IDynamicThreadPoolService {
 
-    private final Logger logger = LoggerFactory.getLogger(DynamicThreadPoolServiceImp.class);
+    private final Logger logger = LoggerFactory.getLogger(DynamicThreadPoolServiceImpl.class);
 
     private final Map<String, ThreadPoolExecutor> threadPoolExecutorMap;
 
     private final String applicationName;
 
-    public DynamicThreadPoolServiceImp(String applicationName, Map<String, ThreadPoolExecutor> threadPoolExecutorMap) {
+    public DynamicThreadPoolServiceImpl(String applicationName, Map<String, ThreadPoolExecutor> threadPoolExecutorMap) {
         this.applicationName = applicationName;
         this.threadPoolExecutorMap = threadPoolExecutorMap;
     }

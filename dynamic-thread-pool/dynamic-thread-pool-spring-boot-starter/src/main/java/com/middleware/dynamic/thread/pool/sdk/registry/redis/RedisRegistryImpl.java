@@ -16,13 +16,14 @@ import java.util.List;
  * @create 2024-11-11 12:07
  */
 
-public class RedisRegistryImp implements IRegistry {
+public class RedisRegistryImpl implements IRegistry {
     private final RedissonClient redissonClient;
 
-    public RedisRegistryImp(RedissonClient redissonClient) {
+    public RedisRegistryImpl(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 
+    // 把一堆线程池的配置 作为一个列表 存到 Redis 里
     @Override
     public void reportThreadPool(List<ThreadPoolConfigEntity> threadPoolConfigEntityList) {
         // redissonClient.getList() 不会立即与 Redis 交互，而是返回一个操作 Redis 的代理对象。
@@ -31,6 +32,7 @@ public class RedisRegistryImp implements IRegistry {
         list.addAll(threadPoolConfigEntityList);
     }
 
+    // 把 一个线程池的配置信息 存到 Redis 的键值对里，并设置过期时间（比如 30 天后自动删除）
     @Override
     public void reportThreadPoolConfigParameter(ThreadPoolConfigEntity threadPoolConfigEntity) {
         // 获取配置前缀, 拼接线程池名称, 生成唯一的 Redis 键

@@ -1,9 +1,11 @@
 package com.middleware.dynamic.thread.pool.sdk.config;
 
-import com.middleware.dynamic.thread.pool.sdk.domain.DynamicThreadPoolServiceImp;
+import com.middleware.dynamic.thread.pool.sdk.domain.DynamicThreadPoolServiceImpl;
 import com.middleware.dynamic.thread.pool.sdk.domain.IDynamicThreadPoolService;
+import com.middleware.dynamic.thread.pool.sdk.domain.model.entity.ThreadPoolConfigEntity;
+import com.middleware.dynamic.thread.pool.sdk.domain.model.valobj.RegistryEnumVO;
 import com.middleware.dynamic.thread.pool.sdk.registry.IRegistry;
-import com.middleware.dynamic.thread.pool.sdk.registry.redis.RedisRegistryImp;
+import com.middleware.dynamic.thread.pool.sdk.registry.redis.RedisRegistryImpl;
 import com.middleware.dynamic.thread.pool.sdk.trigger.job.ThreadPoolDataReportJob;
 import com.middleware.dynamic.thread.pool.sdk.trigger.listener.ThreadPoolConfigAdjustListener;
 import org.apache.commons.lang.StringUtils;
@@ -35,6 +37,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class DynamicThreadPoolAutoConfig {
     private final Logger logger = LoggerFactory.getLogger(DynamicThreadPoolAutoConfig.class);
 
+    private String applicationName;
+
     @Bean("redissonClient")
     public RedissonClient redissonClient(DynamicThreadPoolAutoProperties properties) {
         Config config = new Config();
@@ -62,20 +66,20 @@ public class DynamicThreadPoolAutoConfig {
 
     @Bean
     public IRegistry redisRegistry(RedissonClient dynamicThreadRedissonClient) {
-        return new RedisRegistryImp(dynamicThreadRedissonClient);
+        return new RedisRegistryImpl(dynamicThreadRedissonClient);
     }
 
 
     @Bean("dynamicThreadPoolService")
-    public DynamicThreadPoolServiceImp dynamicThreadPoolService(ApplicationContext applicationContext, Map<String, ThreadPoolExecutor> threadPoolExecutorMap) {
-        String applicationName = applicationContext.getEnvironment().getProperty("spring.application.name");
+    public DynamicThreadPoolServiceImpl dynamicThreadPoolService(ApplicationContext applicationContext, Map<String, ThreadPoolExecutor> threadPoolExecutorMap) {
+        applicationName = applicationContext.getEnvironment().getProperty("spring.application.name");
 
         if (StringUtils.isBlank(applicationName)) {
             applicationName = "NameIsNotFound";
             logger.warn("动态线程池，启动提示。SpringBoot 应用未配置 spring.application.name 无法获取到应用名称！");
         }
 
-        return new DynamicThreadPoolServiceImp(applicationName, threadPoolExecutorMap);
+        return new DynamicThreadPoolServiceImpl(applicationName, threadPoolExecutorMap);
     }
 
     @Bean
@@ -83,5 +87,16 @@ public class DynamicThreadPoolAutoConfig {
         return new ThreadPoolDataReportJob(dynamicThreadPoolService, registry);
     }
 
-    public RTopic threadPoolConfigAdjustListener(RedissonClient redissonClient, ThreadPoolConfigAdjustListener)
+    @Bean
+    public ThreadPoolConfigAdjustListener threadPoolConfigAdjustListener(IDynamicThreadPoolService dynamicThreadPoolService, IRegistry registry) {
+        return new ThreadPoolConfigAdjustListener(dynamicThreadPoolService, registry);
+    }
+
+    @Bean(name = "dynamicThreadPoolRedisTopic")
+    public RTopic threadPoolConfigAdjustListener(RedissonClient redissonClient, ThreadPoolConfigAdjustListener threadPoolConfigAdjustListener) {
+        // getTopic(String name): Redisson 的 API，用于获取一个指定名称的 Redis Topic。这个 Topic 的名称是动态生成的
+        RTopic topic = redissonClient.getTopic(RegistryEnumVO.DYNAMIC_THREAD_POOL_REDIS_TOPIC.getKey() + "_" + applicationName);
+        topic.addListener(ThreadPoolConfigEntity.class, threadPoolConfigAdjustListener);
+        return topic;
+    }
 }
