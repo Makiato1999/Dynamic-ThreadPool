@@ -72,7 +72,7 @@ public class DynamicThreadPoolServiceImpl implements IDynamicThreadPoolService {
         if (threadPoolConfigEntity == null || !applicationName.equals(threadPoolConfigEntity.getAppName())) {
             return;
         }
-        ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorMap.get(threadPoolConfigEntity.getAppName());
+        ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorMap.get(threadPoolConfigEntity.getThreadPoolName());
         if (threadPoolExecutor == null) {
             return;
         }

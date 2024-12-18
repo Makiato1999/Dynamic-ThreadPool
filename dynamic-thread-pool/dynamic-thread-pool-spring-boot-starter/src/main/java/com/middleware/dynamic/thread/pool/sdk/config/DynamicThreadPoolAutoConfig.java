@@ -10,6 +10,7 @@ import com.middleware.dynamic.thread.pool.sdk.trigger.job.ThreadPoolDataReportJo
 import com.middleware.dynamic.thread.pool.sdk.trigger.listener.ThreadPoolConfigAdjustListener;
 import org.apache.commons.lang.StringUtils;
 import org.redisson.Redisson;
+import org.redisson.api.RBucket;
 import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
@@ -23,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -71,12 +73,30 @@ public class DynamicThreadPoolAutoConfig {
 
 
     @Bean("dynamicThreadPoolService")
-    public DynamicThreadPoolServiceImpl dynamicThreadPoolService(ApplicationContext applicationContext, Map<String, ThreadPoolExecutor> threadPoolExecutorMap) {
+    public DynamicThreadPoolServiceImpl dynamicThreadPoolService(ApplicationContext applicationContext, Map<String, ThreadPoolExecutor> threadPoolExecutorMap, RedissonClient redissonClient) {
         applicationName = applicationContext.getEnvironment().getProperty("spring.application.name");
 
         if (StringUtils.isBlank(applicationName)) {
             applicationName = "NameIsNotFound";
             logger.warn("动态线程池，启动提示。SpringBoot 应用未配置 spring.application.name 无法获取到应用名称！");
+        }
+
+        // 避免重启应用回到初始值，我们需要获取redis的缓存，设置本地线程池配置
+        Set<String> threadPoolKeys = threadPoolExecutorMap.keySet();
+        for (String threadPoolKey : threadPoolKeys) {
+            // 获取完整的键名
+            String configKey = RegistryEnumVO.THREAD_POOL_CONFIG_PARAMETER_LIST_KEY.getKey()
+                    + "_" + applicationName + "_" + threadPoolKey;
+            // 获取 Redisson 的 RBucket
+            RBucket<ThreadPoolConfigEntity> bucket = redissonClient.getBucket(configKey);
+            // 获取 ThreadPoolConfigEntity 实例
+            ThreadPoolConfigEntity threadPoolConfigEntity = bucket.get();
+
+            if (null == threadPoolConfigEntity) continue;
+
+            ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorMap.get(threadPoolKey);
+            threadPoolExecutor.setCorePoolSize(threadPoolConfigEntity.getCorePoolSize());
+            threadPoolExecutor.setMaximumPoolSize(threadPoolConfigEntity.getMaxPoolSize());
         }
 
         return new DynamicThreadPoolServiceImpl(applicationName, threadPoolExecutorMap);
