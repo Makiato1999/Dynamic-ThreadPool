@@ -1,0 +1,31 @@
+server:
+  port: 8091
+
+# Thread Pool Config
+thread:
+  pool:
+    executor:
+      config:
+        core-pool-size: 20
+        max-pool-size: 50
+        keep-alive-time: 5000
+        block-queue-size: 5000
+        policy: CallerRunsPolicy
+
+# Dynamic Thread Pool Management Config
+dynamic:
+  thread:
+    pool:
+      config:
+        # status; true = enable, false = disable
+        enabeled: true
+        # redis host
+        host: 127.0.0.1
+        # redis port
+        port: 16379
+
+# Loggers
+logging:
+  level:
+    root: info
+  config: classpath:logback-spring.xml
