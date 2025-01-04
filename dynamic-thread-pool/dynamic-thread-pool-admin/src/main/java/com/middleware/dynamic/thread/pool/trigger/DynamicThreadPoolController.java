@@ -17,9 +17,9 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/api/v1/dynamic/thread/pool/")
 public class DynamicThreadPoolController {
+
     @Resource
     public RedissonClient redissonClient;
-
 
     /**
      * 查询线程池数据
@@ -101,7 +101,4 @@ public class DynamicThreadPoolController {
                     .build();
         }
     }
-
-
-
 }

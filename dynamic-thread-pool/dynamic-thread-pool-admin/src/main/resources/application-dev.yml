@@ -1,30 +1,20 @@
 server:
-  port: 8091
+  port: 8089
 
-# Thread Pool Config
-thread:
-  pool:
-    executor:
-      config:
-        core-pool-size: 20
-        max-pool-size: 50
-        keep-alive-time: 5000
-        block-queue-size: 5000
-        policy: CallerRunsPolicy
+redis:
+  sdk:
+    config:
+      host: 127.0.0.1
+      port: 16379
+      pool-size: 10
+      min-idle-size: 5
+      idle-timeout: 30000
+      connect-timeout: 5000
+      retry-attempts: 3
+      retry-interval: 1000
+      ping-interval: 60000
+      keep-alive: true
 
-# Dynamic Thread Pool Management Config
-dynamic:
-  thread:
-    pool:
-      config:
-        # status; true = enable, false = disable
-        enabeled: true
-        # redis host
-        host: 127.0.0.1
-        # redis port
-        port: 16379
-
-# Loggers
 logging:
   level:
     root: info

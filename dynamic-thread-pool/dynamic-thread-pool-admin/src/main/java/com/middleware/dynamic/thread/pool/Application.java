@@ -5,6 +5,7 @@ import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
-@Configuration
+@Configurable
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
@@ -30,6 +31,9 @@ public class Application {
             Config config = new Config();
             // 根据需要可以设定编解码器；https://github.com/redisson/redisson/wiki/4.-%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97%E5%8C%96
             config.setCodec(JsonJacksonCodec.INSTANCE);
+
+            System.out.println("Redis Host: " + properties.getHost());
+            System.out.println("Redis Port: " + properties.getPort());
 
             config.useSingleServer()
                     .setAddress("redis://" + properties.getHost() + ":" + properties.getPort())
