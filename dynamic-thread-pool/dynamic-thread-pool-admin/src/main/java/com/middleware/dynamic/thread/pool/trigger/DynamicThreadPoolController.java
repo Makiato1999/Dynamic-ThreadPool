@@ -52,7 +52,7 @@ public class DynamicThreadPoolController {
     @RequestMapping(value = "query_thread_pool_config", method = RequestMethod.GET)
     public Response<ThreadPoolConfigEntity> queryThreadPoolConfig(@RequestParam String appName, @RequestParam String threadPoolName) {
         try {
-            String cacheKey = "THREAD_POOL_CONFIG_PARAMETER_LIST_KEY" + "_" + appName + "_" + threadPoolName;
+            String cacheKey = "THREAD_POOL_CONFIG_PARAMETER_LIST_KEY" + "_" + threadPoolName;
             ThreadPoolConfigEntity threadPoolConfigEntity = redissonClient.<ThreadPoolConfigEntity>getBucket(cacheKey).get();
             return Response.<ThreadPoolConfigEntity>builder()
                     .code(Response.Code.SUCCESS.getCode())

@@ -37,6 +37,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableScheduling
 @EnableConfigurationProperties(DynamicThreadPoolAutoProperties.class)
 public class DynamicThreadPoolAutoConfig {
+    public DynamicThreadPoolAutoConfig() {
+        System.out.println("DynamicThreadPoolAutoConfig initialized!");
+    }
     private final Logger logger = LoggerFactory.getLogger(DynamicThreadPoolAutoConfig.class);
 
     private String applicationName;
