@@ -44,7 +44,7 @@ public class DynamicThreadPoolAutoConfig {
 
     private String applicationName;
 
-    @Bean("redissonClient")
+    @Bean("dynamicThreadRedissonClient")
     public RedissonClient redissonClient(DynamicThreadPoolAutoProperties properties) {
         Config config = new Config();
         // 根据需要可以设定编解码器；https://github.com/redisson/redisson/wiki/4.-%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97%E5%8C%96
@@ -115,6 +115,7 @@ public class DynamicThreadPoolAutoConfig {
         return new ThreadPoolConfigAdjustListener(dynamicThreadPoolService, registry);
     }
 
+    // 注册了一个 Redis Topic 订阅者（Consumer）
     @Bean(name = "dynamicThreadPoolRedisTopic")
     public RTopic threadPoolConfigAdjustListener(RedissonClient redissonClient, ThreadPoolConfigAdjustListener listener) {
         // getTopic(String name): Redisson 的 API，用于获取一个指定名称的 Redis Topic。这个 Topic 的名称是动态生成的

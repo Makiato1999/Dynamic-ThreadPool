@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/v1/dynamic/thread/pool/")
 public class DynamicThreadPoolController {
 
+    // 依赖注入获取这个实例，而无需重复初始化
     @Resource
     public RedissonClient redissonClient;
 
@@ -84,6 +85,7 @@ public class DynamicThreadPoolController {
     public Response<Boolean> updateThreadPoolConfig(@RequestBody ThreadPoolConfigEntity request) {
         try {
             log.info("修改线程池配置开始 {} {} {}", request.getAppName(), request.getThreadPoolName(), JSON.toJSONString(request));
+            // 注册了一个 Redis Topic 发布者（Publisher）
             RTopic topic = redissonClient.getTopic("DYNAMIC_THREAD_POOL_REDIS_TOPIC" + "_" + request.getAppName());
             topic.publish(request);
             log.info("修改线程池配置完成 {} {}", request.getAppName(), request.getThreadPoolName());

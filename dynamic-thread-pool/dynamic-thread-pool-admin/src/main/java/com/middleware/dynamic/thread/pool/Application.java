@@ -26,6 +26,8 @@ public class Application {
     @EnableConfigurationProperties(RedisClientConfigProperties.class)
     public static class RedisClientConfig {
 
+        // RedissonClient 是 Redisson 库的核心对象，必须先实例化后才能使用，
+        // 所以需要通过某种方式将它初始化并注册到 Spring 容器中作为一个 Bean
         @Bean("redissonClient")
         public RedissonClient redissonClient(ConfigurableApplicationContext applicationContext, RedisClientConfigProperties properties) {
             Config config = new Config();
@@ -46,7 +48,7 @@ public class Application {
                     .setPingConnectionInterval(properties.getPingInterval())
                     .setKeepAlive(properties.isKeepAlive())
             ;
-
+            // 返回实例
             return Redisson.create(config);
         }
 
