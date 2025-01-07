@@ -28,6 +28,7 @@ public class RedisRegistryImpl implements IRegistry {
     public void reportThreadPool(List<ThreadPoolConfigEntity> threadPoolConfigEntityList) {
         // redissonClient.getList() 不会立即与 Redis 交互，而是返回一个操作 Redis 的代理对象。
         RList<ThreadPoolConfigEntity> list = redissonClient.getList(RegistryEnumVO.THREAD_POOL_CONFIG_LIST_KEY.getKey());
+        list.delete();
         // 实际的数据操作延迟到你调用 addAll() 或其他方法时才发生。
         list.addAll(threadPoolConfigEntityList);
     }

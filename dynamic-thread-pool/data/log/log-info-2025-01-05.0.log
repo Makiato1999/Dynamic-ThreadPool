@@ -1,0 +1,22 @@
+25-01-05.16:32:32.154 [main            ] INFO  Application            - Starting Application using Java 17.0.9 on MacBook-Pro-2.local with PID 51364 (/Users/xiexiaoran/Documents/GitHub/Dynamic-ThreadPool/dynamic-thread-pool/dynamic-thread-pool-admin/target/classes started by xiexiaoran in /Users/xiexiaoran/Documents/GitHub/Dynamic-ThreadPool/dynamic-thread-pool)
+25-01-05.16:32:32.157 [main            ] INFO  Application            - The following 1 profile is active: "dev"
+25-01-05.16:32:32.951 [main            ] INFO  RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+25-01-05.16:32:32.955 [main            ] INFO  RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+25-01-05.16:32:32.979 [main            ] INFO  RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+25-01-05.16:32:33.416 [main            ] INFO  TomcatWebServer        - Tomcat initialized with port(s): 8089 (http)
+25-01-05.16:32:33.424 [main            ] INFO  Http11NioProtocol      - Initializing ProtocolHandler ["http-nio-8089"]
+25-01-05.16:32:33.424 [main            ] INFO  StandardService        - Starting service [Tomcat]
+25-01-05.16:32:33.424 [main            ] INFO  StandardEngine         - Starting Servlet engine: [Apache Tomcat/9.0.75]
+25-01-05.16:32:33.515 [main            ] INFO  [/]                    - Initializing Spring embedded WebApplicationContext
+25-01-05.16:32:33.516 [main            ] INFO  ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1306 ms
+25-01-05.16:32:33.869 [main            ] INFO  Version                - Redisson 3.26.0
+25-01-05.16:32:33.915 [main            ] WARN  DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+25-01-05.16:32:34.089 [redisson-netty-1-4] INFO  ConnectionsHolder      - 1 connections initialized for 127.0.0.1/127.0.0.1:16379
+25-01-05.16:32:34.133 [redisson-netty-1-13] INFO  ConnectionsHolder      - 5 connections initialized for 127.0.0.1/127.0.0.1:16379
+25-01-05.16:32:34.952 [main            ] INFO  EndpointLinksResolver  - Exposing 1 endpoint(s) beneath base path '/actuator'
+25-01-05.16:32:34.972 [main            ] INFO  Http11NioProtocol      - Starting ProtocolHandler ["http-nio-8089"]
+25-01-05.16:32:34.982 [main            ] INFO  TomcatWebServer        - Tomcat started on port(s): 8089 (http) with context path ''
+25-01-05.16:32:34.997 [main            ] INFO  Application            - Started Application in 3.576 seconds (JVM running for 4.622)
+25-01-05.16:32:35.312 [RMI TCP Connection(3)-127.0.0.1] INFO  [/]                    - Initializing Spring DispatcherServlet 'dispatcherServlet'
+25-01-05.16:32:35.312 [RMI TCP Connection(3)-127.0.0.1] INFO  DispatcherServlet      - Initializing Servlet 'dispatcherServlet'
+25-01-05.16:32:35.313 [RMI TCP Connection(3)-127.0.0.1] INFO  DispatcherServlet      - Completed initialization in 1 ms
