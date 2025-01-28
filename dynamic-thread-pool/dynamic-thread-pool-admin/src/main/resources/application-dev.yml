@@ -1,11 +1,13 @@
 server:
-  port: 8089
+  port: 8090
 
 redis:
   sdk:
     config:
-      host: 127.0.0.1
-      port: 16379
+      #host: 127.0.0.1
+      #port: 16379
+      host: redis                # 因为我全上docker了，所以需要使用 Docker Compose 服务名
+      port: 6379                 # Redis 服务的内部端口
       pool-size: 10
       min-idle-size: 5
       idle-timeout: 30000

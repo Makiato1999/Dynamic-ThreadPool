@@ -1,4 +1,4 @@
-package com.middleware;
+package com.middleware.dynamic.thread.pool;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

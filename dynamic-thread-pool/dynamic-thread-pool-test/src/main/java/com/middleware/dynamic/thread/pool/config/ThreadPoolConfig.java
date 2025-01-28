@@ -1,4 +1,4 @@
-package com.middleware.config;
+package com.middleware.dynamic.thread.pool.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

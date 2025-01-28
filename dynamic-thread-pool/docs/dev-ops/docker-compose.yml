@@ -34,6 +34,45 @@ services:
       redis:
         condition: service_healthy
 
+  admin:
+    build:
+      context: ../../dynamic-thread-pool-admin
+      dockerfile: Dockerfile
+    container_name: admin
+    restart: always
+    ports:
+      - 8090:8090
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    networks:
+      - my-network
+
+  test:
+    build:
+      context: ../../dynamic-thread-pool-test
+      dockerfile: Dockerfile
+    container_name: test
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      redis:
+        condition: service_healthy
+      admin:
+        condition: service_started
+    environment:
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      ADMIN_HOST: admin
+      ADMIN_PORT: 8090
+    networks:
+      - my-network
+
+
 networks:
   my-network:
     driver: bridge

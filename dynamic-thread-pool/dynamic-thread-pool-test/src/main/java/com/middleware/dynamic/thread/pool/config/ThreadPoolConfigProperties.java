@@ -1,4 +1,4 @@
-package com.middleware.config;
+package com.middleware.dynamic.thread.pool.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

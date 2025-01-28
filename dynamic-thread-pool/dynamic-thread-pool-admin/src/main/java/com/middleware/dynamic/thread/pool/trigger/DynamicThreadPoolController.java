@@ -25,7 +25,7 @@ public class DynamicThreadPoolController {
     /**
      * 查询线程池数据
      * curl --request GET \
-     * --url 'http://localhost:8089/api/v1/dynamic/thread/pool/query_thread_pool_list'
+     * --url 'http://localhost:8090/api/v1/dynamic/thread/pool/query_thread_pool_list'
      */
     @RequestMapping(value = "query_thread_pool_list", method = RequestMethod.GET)
     public Response<List<ThreadPoolConfigEntity>> queryThreadPoolList() {
@@ -48,7 +48,7 @@ public class DynamicThreadPoolController {
     /**
      * 查询线程池配置
      * curl --request GET \
-     * --url 'http://localhost:8089/api/v1/dynamic/thread/pool/query_thread_pool_config?appName=dynamic-thread-pool-test-app&threadPoolName=threadPoolExecutor'
+     * --url 'http://localhost:8090/api/v1/dynamic/thread/pool/query_thread_pool_config?appName=dynamic-thread-pool-test-app&threadPoolName=threadPoolExecutor'
      */
     @RequestMapping(value = "query_thread_pool_config", method = RequestMethod.GET)
     public Response<ThreadPoolConfigEntity> queryThreadPoolConfig(@RequestParam String appName, @RequestParam String threadPoolName) {
@@ -72,7 +72,7 @@ public class DynamicThreadPoolController {
     /**
      * 修改线程池配置
      * curl --request POST \
-     * --url http://localhost:8089/api/v1/dynamic/thread/pool/update_thread_pool_config \
+     * --url http://localhost:8090/api/v1/dynamic/thread/pool/update_thread_pool_config \
      * --header 'content-type: application/json' \
      * --data '{
      * "appName":"dynamic-thread-pool-test-app",
